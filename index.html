@@ -6,8 +6,8 @@
     <meta name="description" content="MediEase - Convert handwritten & printed prescriptions into clear, visual daily medication schedules with Gemini 3.5 Flash-Lite AI.">
     <meta name="theme-color" content="#0284c7">
     <title>MediEase — Simplified Prescription AI</title>
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="backend/manifest.json">
+    <link rel="stylesheet" href="styles/style.css">
     <!-- Google Font for clean modern typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +23,7 @@
                 <button id="btnSeniorMode" class="btn-toggle" aria-pressed="false">👴 Senior Mode</button>
                 <button id="btnHighContrast" class="btn-toggle" aria-pressed="false">👁️ High Contrast</button>
                 <button id="btnLargeText" class="btn-toggle" aria-pressed="false">🔍 Large Text</button>
+                <button id="dark-toggle" class="btn-toggle">🌙 Dark Mode</button>
             </div>
         </div>
     </div>
@@ -465,6 +466,7 @@
     </footer>
 
     <!-- Application Script -->
+     <script src="utils/util.js"></script>
     <script src="script.js"></script>
     <script>
         // Register Service Worker for PWA compliance
