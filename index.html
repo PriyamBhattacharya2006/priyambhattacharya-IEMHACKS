@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MediEase - Convert handwritten & printed prescriptions into clear, visual daily medication schedules with Gemini 3.5 Flash-Lite AI.">
+    <meta name="theme-color" content="#0284c7">
+    <title>MediEase — Simplified Prescription AI</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Font for clean modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Accessibility Bar -->
+    <div class="accessibility-bar" role="region" aria-label="Accessibility Controls">
+        <div class="container accessibility-flex">
+            <span class="accessibility-label">⚡ Accessibility Options:</span>
+            <div class="accessibility-controls">
+                <button id="btnSeniorMode" class="btn-toggle" aria-pressed="false">👴 Senior Mode</button>
+                <button id="btnHighContrast" class="btn-toggle" aria-pressed="false">👁️ High Contrast</button>
+                <button id="btnLargeText" class="btn-toggle" aria-pressed="false">🔍 Large Text</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <header class="main-header">
+        <div class="container nav-container">
+            <a href="#home" class="brand-logo" id="logoBtn">
+                <div class="logo-icon">💊</div>
+                <div class="logo-text">
+                    <span class="brand-name">MediEase</span>
+                    <span class="brand-tagline">Your Prescription. Simplified.</span>
+                </div>
+            </a>
+
+            <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+
+            <nav class="nav-links" id="navLinks">
+                <a href="#home" class="nav-link active" data-view="view-home">Home</a>
+                <a href="#scan" class="nav-link" data-view="view-scan">Scan Prescription</a>
+                <a href="#schedule" class="nav-link" data-view="view-schedule">My Schedule</a>
+                <a href="#caregiver" class="nav-link" data-view="view-caregiver">Caregiver View</a>
+                <a href="#history" class="nav-link" data-view="view-history">History</a>
+                <button class="btn btn-primary nav-cta" id="navScanBtn">Scan Now</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Views -->
+    <main class="main-content container">
+
+        <!-- VIEW 1: HOME / HERO -->
+        <section id="view-home" class="view-section active">
+            <div class="hero-section">
+                <div class="hero-content">
+                    <div class="badge-pill">✨ Powered by Gemini 3.5 Flash-Lite Vision</div>
+                    <h1 class="hero-title">Turn Your Prescription Into a Simple Daily Routine.</h1>
+                    <p class="hero-subtitle">
+                        Upload your prescription image and let AI transform complex medical handwriting into a clear, interactive visual medication schedule.
+                    </p>
+                    <div class="hero-cta-group">
+                        <button class="btn btn-primary btn-large" id="heroScanBtn">📸 Scan Prescription</button>
+                        <button class="btn btn-secondary btn-large" id="heroDemoBtn">🚀 Try Interactive Demo</button>
+                    </div>
+
+                    <div class="safety-banner-mini">
+                        <span>🛡️</span>
+                        <p><strong>MediEase doesn't replace the doctor.</strong> It makes the doctor's instructions easier to understand and follow.</p>
+                    </div>
+                </div>
+
+                <div class="hero-graphic">
+                    <div class="workflow-card">
+                        <div class="wf-step">
+                            <div class="wf-icon">📄</div>
+                            <div class="wf-text">Messy Prescription</div>
+                        </div>
+                        <div class="wf-arrow">↓</div>
+                        <div class="wf-step highlight">
+                            <div class="wf-icon">✨</div>
+                            <div class="wf-text">Gemini 3.5 Flash-Lite AI</div>
+                        </div>
+                        <div class="wf-arrow">↓</div>
+                        <div class="wf-step">
+                            <div class="wf-icon">🔍</div>
+                            <div class="wf-text">Uncertainty Verification</div>
+                        </div>
+                        <div class="wf-arrow">↓</div>
+                        <div class="wf-step success">
+                            <div class="wf-icon">📅</div>
+                            <div class="wf-text">Visual Medication Routine</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI Prescription Understanding</h3>
+                    <p>Gemini 3.5 Flash-Lite extracts dosages, frequencies, and timing instructions from complex handwritten or printed doctor notes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <h3>AI Verification & Confidence</h3>
+                    <p>MediEase explicitly flags uncertain or ambiguous text for your review instead of blindly guessing medical instructions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👴</div>
+                    <h3>Senior & Accessible First</h3>
+                    <p>Features ultra-large text modes, high-contrast themes, simplified views, and a hands-free Web Speech voice assistant.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: PRESCRIPTION SCANNER -->
+        <section id="view-scan" class="view-section">
+            <div class="section-header">
+                <h2>Scan & Analyze Prescription</h2>
+                <p>Upload a clear photo or doctor's prescription slip below.</p>
+            </div>
+
+            <div class="scanner-card">
+                <div class="drop-zone" id="dropZone">
+                    <input type="file" id="prescriptionInput" accept="image/*" capture="environment" class="file-input">
+                    <div class="drop-zone-content" id="dropZoneContent">
+                        <div class="upload-icon">📷</div>
+                        <h3>Drag & drop your prescription image here</h3>
+                        <p>or click to browse files from your computer or camera</p>
+                        <span class="file-types">Supports PNG, JPG, JPEG, WEBP</span>
+                    </div>
+
+                    <!-- Image Preview Area -->
+                    <div class="image-preview-container hidden" id="previewContainer">
+                        <img id="imagePreview" src="" alt="Prescription Preview">
+                        <div class="image-details">
+                            <span id="fileNameDisplay" class="file-name">prescription.jpg</span>
+                            <span id="fileSizeDisplay" class="file-size">1.2 MB</span>
+                        </div>
+                        <div class="preview-actions">
+                            <button id="btnZoomImage" class="btn btn-small btn-secondary">🔍 Zoom</button>
+                            <button id="btnRemoveImage" class="btn btn-small btn-danger">🗑️ Remove Image</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scanner-actions">
+                    <button class="btn btn-primary btn-large" id="btnAnalyze" disabled>✨ Analyze Prescription with Gemini</button>
+                    <button class="btn btn-outline btn-large" id="btnScannerDemo">🚀 Load Demo Prescription</button>
+                </div>
+
+                <!-- API Key Reminder Notice -->
+                <div class="api-notice" id="apiNotice">
+                    <span class="api-notice-icon">⚙️</span>
+                    <div class="api-notice-text">
+                        <strong>Gemini API Status:</strong> <span id="apiStatusText">Ready for Processing</span>
+                        <br><small>Uses model: <code>gemini-3.5-flash-lite</code>. Demo mode works offline without a key.</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading & Analysis Screen -->
+            <div class="analysis-loader hidden" id="analysisLoader">
+                <div class="scanner-animation">
+                    <div class="scan-line"></div>
+                    <div class="pulse-ring"></div>
+                </div>
+                <h3 class="loader-title">Analyzing Your Prescription with Gemini AI...</h3>
+                <p class="loader-subtitle">Please wait while we carefully read the medical instructions.</p>
+
+                <div class="progress-steps">
+                    <div class="step-item active" id="step1">
+                        <span class="step-icon">⏳</span>
+                        <span class="step-label">Reading prescription image...</span>
+                    </div>
+                    <div class="step-item" id="step2">
+                        <span class="step-icon">⚪</span>
+                        <span class="step-label">Identifying medicine names & dosages...</span>
+                    </div>
+                    <div class="step-item" id="step3">
+                        <span class="step-icon">⚪</span>
+                        <span class="step-label">Parsing schedule timing & food instructions...</span>
+                    </div>
+                    <div class="step-item" id="step4">
+                        <span class="step-icon">⚪</span>
+                        <span class="step-label">Evaluating handwriting confidence & uncertainty...</span>
+                    </div>
+                    <div class="step-item" id="step5">
+                        <span class="step-icon">⚪</span>
+                        <span class="step-label">Structuring verification schedule...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 3: VERIFICATION / REVIEW SCREEN -->
+        <section id="view-review" class="view-section">
+            <div class="section-header">
+                <h2>Review & Verify Prescription</h2>
+                <p>AI extraction can contain errors. Please review and confirm the extracted details against your doctor's note.</p>
+            </div>
+
+            <div class="alert alert-warning">
+                <span>⚠️</span>
+                <div>
+                    <strong>Human Verification Required:</strong> Fields highlighted with low confidence or uncertainty (<span class="badge badge-warning">Needs Verification</span>) must be manually double-checked.
+                </div>
+            </div>
+
+            <div class="review-grid">
+                <!-- Left: Prescription Image -->
+                <div class="review-image-card">
+                    <div class="card-header">
+                        <h3>Original Prescription</h3>
+                    </div>
+                    <div class="image-wrapper">
+                        <img id="reviewImage" src="" alt="Prescription Document">
+                    </div>
+                </div>
+
+                <!-- Right: AI Extracted Details (Editable Form) -->
+                <div class="review-data-card">
+                    <div class="card-header">
+                        <h3>Extracted Details</h3>
+                        <button class="btn btn-small btn-secondary" id="btnAddMedicineRow">+ Add Medicine</button>
+                    </div>
+
+                    <form id="reviewForm">
+                        <div class="form-row-group">
+                            <div class="form-group">
+                                <label for="reviewPatientName">Patient Name</label>
+                                <input type="text" id="reviewPatientName" placeholder="Not specified">
+                            </div>
+                            <div class="form-group">
+                                <label for="reviewDoctorName">Doctor Name</label>
+                                <input type="text" id="reviewDoctorName" placeholder="Not specified">
+                            </div>
+                            <div class="form-group">
+                                <label for="reviewPrescriptionDate">Prescription Date</label>
+                                <input type="date" id="reviewPrescriptionDate">
+                            </div>
+                        </div>
+
+                        <div class="medicines-editor-list" id="medicinesEditorList">
+                            <!-- Dynamic Medicine Input Cards Inserted Here -->
+                        </div>
+
+                        <div class="form-footer-actions">
+                            <button type="button" class="btn btn-success btn-large btn-block" id="btnConfirmSchedule">
+                                ✓ Confirm & Create Medication Schedule
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: SCHEDULE & DASHBOARD -->
+        <section id="view-schedule" class="view-section">
+            
+            <!-- Dashboard Welcome Header -->
+            <div class="dashboard-header">
+                <div class="welcome-text">
+                    <h2 id="greetingText">Good Day 👋</h2>
+                    <p id="patientGreeting">Here is your daily medication schedule.</p>
+                </div>
+
+                <!-- Voice Assistant Launch Banner -->
+                <div class="voice-widget-card">
+                    <div class="voice-widget-info">
+                        <h3>🎙️ Ask MediEase Voice Assistant</h3>
+                        <p>Ask: <em>"What medicine do I take tonight?"</em></p>
+                    </div>
+                    <button class="btn btn-voice" id="btnActivateVoice">
+                        <span class="mic-icon">🎤</span> Talk to Assistant
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="statTotal">0</div>
+                    <div class="stat-label">Today's Medicines</div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-value" id="statTaken">0</div>
+                    <div class="stat-label">Taken</div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-value" id="statRemaining">0</div>
+                    <div class="stat-label">Remaining</div>
+                </div>
+            </div>
+
+            <!-- Next Medicine Spotlight Card -->
+            <div class="spotlight-card" id="nextMedicineSpotlight">
+                <div class="spotlight-header">
+                    <span class="spotlight-badge">NEXT MEDICATION DUE</span>
+                    <span class="spotlight-time" id="spotlightTime">--:--</span>
+                </div>
+                <div class="spotlight-body">
+                    <div class="spotlight-med-icon">💊</div>
+                    <div class="spotlight-details">
+                        <h3 id="spotlightMedName">No Upcoming Medicines</h3>
+                        <p id="spotlightMedDosage">You're all caught up for today!</p>
+                        <span class="tag tag-food" id="spotlightFoodTag">--</span>
+                    </div>
+                    <button class="btn btn-success btn-large spotlight-action-btn" id="spotlightActionBtn" disabled>
+                        ✓ Mark as Taken
+                    </button>
+                </div>
+            </div>
+
+            <!-- Overall Daily Progress Bar -->
+            <div class="progress-section-card">
+                <div class="progress-header">
+                    <span><strong>Today's Adherence Progress</strong></span>
+                    <span id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+                </div>
+            </div>
+
+            <!-- Schedule Timeline List -->
+            <div class="schedule-timeline" id="scheduleTimeline">
+                <!-- Morning, Afternoon, Night Slots dynamically rendered here -->
+            </div>
+
+            <!-- Drug Safety Feature Placeholder Banner -->
+            <div class="safety-card-placeholder">
+                <div class="safety-icon">⚠️</div>
+                <div class="safety-info">
+                    <h4>Medication Safety Notice</h4>
+                    <p>Medication interaction checking requires a trusted clinical medical database. Please consult your doctor or pharmacist if you have concerns about taking multiple medicines.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 5: CAREGIVER VIEW (PROTOTYPE) -->
+        <section id="view-caregiver" class="view-section">
+            <div class="section-header">
+                <h2>👨‍👩‍👧 Caregiver Monitoring View</h2>
+                <p>Track medication adherence for loved ones in real-time.</p>
+            </div>
+
+            <div class="prototype-notice">
+                <span>ℹ️</span> Prototype caregiver view — local browser demo only. Remote sync disabled.
+            </div>
+
+            <div class="caregiver-grid">
+                <div class="caregiver-card">
+                    <h3>Patient Overview</h3>
+                    <div class="patient-summary">
+                        <div class="patient-avatar">👤</div>
+                        <div class="patient-meta">
+                            <h4 id="cgPatientName">John Doe</h4>
+                            <p>Prescription Date: <span id="cgRxDate">Today</span></p>
+                        </div>
+                    </div>
+                    <hr class="divider">
+                    <div class="caregiver-adherence">
+                        <h4>Today's Compliance Score</h4>
+                        <div class="score-circle" id="cgAdherenceScore">0%</div>
+                    </div>
+                </div>
+
+                <div class="caregiver-card">
+                    <h3>Dose Log Summary</h3>
+                    <div class="dose-log-list" id="cgDoseLogList">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 6: HISTORY VIEW -->
+        <section id="view-history" class="view-section">
+            <div class="section-header">
+                <h2>Prescription History</h2>
+                <p>Access your past saved prescriptions and medication routines.</p>
+            </div>
+
+            <div class="history-actions-bar">
+                <button class="btn btn-danger btn-small" id="btnClearHistory">🗑️ Clear All Saved Data</button>
+            </div>
+
+            <div class="history-grid" id="historyGrid">
+                <!-- Dynamically populated history cards -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- VOICE ASSISTANT MODAL -->
+    <div class="modal-overlay hidden" id="voiceModal">
+        <div class="modal-card voice-modal-card">
+            <button class="modal-close" id="btnCloseVoiceModal">&times;</button>
+            <div class="voice-modal-header">
+                <div class="pulse-mic-avatar" id="micPulseAvatar">
+                    🎙️
+                </div>
+                <h3>Ask MediEase</h3>
+                <p id="voiceStatusText">Listening... Speak now.</p>
+            </div>
+
+            <div class="voice-transcript-box">
+                <p class="transcript-user" id="userTranscriptText"><em>Your speech will appear here...</em></p>
+                <div class="transcript-response" id="assistantResponseText">
+                    "Hello! I can answer questions about your current medication schedule."
+                </div>
+            </div>
+
+            <div class="voice-fallback-input">
+                <input type="text" id="voiceTextInput" placeholder="Type a question e.g. What medicine do I take tonight?">
+                <button class="btn btn-primary" id="btnSendVoiceText">Ask</button>
+            </div>
+
+            <div class="voice-quick-questions">
+                <button class="chip" data-question="What medicine do I take tonight?">"What medicine do I take tonight?"</button>
+                <button class="chip" data-question="What is my next medicine?">"What is my next medicine?"</button>
+                <button class="chip" data-question="Did I take my morning medicine?">"Did I take my morning medicine?"</button>
+                <button class="chip" data-question="What medicines do I have today?">"What medicines do I have today?"</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMAGE ZOOM MODAL -->
+    <div class="modal-overlay hidden" id="imageZoomModal">
+        <div class="modal-card zoom-modal-card">
+            <button class="modal-close" id="btnCloseZoomModal">&times;</button>
+            <img id="zoomedImage" src="" alt="Zoomed Prescription Image">
+        </div>
+    </div>
+
+    <!-- FOOTER & HEALTHCARE DISCLAIMER -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="disclaimer-box">
+                <h4>🛡️ Healthcare Safety Disclaimer</h4>
+                <p>
+                    MediEase is an AI-assisted prescription organization tool and does not provide medical advice. AI extraction may contain errors. Always verify medicine names, dosages, timing, and duration against your original physical prescription or consult your doctor or pharmacist before taking medications.
+                </p>
+            </div>
+
+            <div class="footer-privacy-note">
+                <p>🔒 <strong>Privacy Statement:</strong> Your schedule and history are stored locally in your browser LocalStorage. When utilizing AI transcription, image data is transmitted directly to Google's Gemini API for processing.</p>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 MediEase. Built for accessible healthcare.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Application Script -->
+    <script src="script.js"></script>
+    <script>
+        // Register Service Worker for PWA compliance
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker Registered successfully'))
+                    .catch(err => console.error('Service Worker registration failed: ', err));
+            });
+        }
+    </script>
+</body>
+</html>
