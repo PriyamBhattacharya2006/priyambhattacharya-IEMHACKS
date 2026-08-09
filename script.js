@@ -13,7 +13,7 @@
 // ==========================================
 
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+const GEMINI_API_KEY = "YOUR_API_KEY";
 const GEMINI_MODEL = "gemini-3.6-flash";
 
 // Global Application State Object
