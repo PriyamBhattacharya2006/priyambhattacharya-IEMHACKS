@@ -13,8 +13,8 @@
 // ==========================================
 
 
-const GEMINI_API_KEY = "";
-const GEMINI_MODEL = "gemini-2.5-flash-lite";
+const GEMINI_API_KEY = "${{secrets.API_KEY}}";
+const GEMINI_MODEL = "gemini-3.6-flash";
 
 // Global Application State Object
 const AppState = {
