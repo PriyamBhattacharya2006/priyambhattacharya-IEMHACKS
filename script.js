@@ -48,7 +48,13 @@ document.addEventListener("DOMContentLoaded", () => {
     updateUI();
 });
 
-
+// Google AI Studio issues two key formats:
+//   - Legacy "Standard" keys: start with "AIzaSy", ~39 chars (being phased
+//     out — unrestricted ones are already rejected, all Standard keys are
+//     rejected from September 2026).
+//   - Current "Auth" keys: start with "AQ.", issued automatically for all
+//     new keys since mid-2026. This is what AI Studio gives you today.
+// Accept either so both old and newly-generated keys work.
 function isApiKeyValid() {
     if (typeof GEMINI_API_KEY !== "string") return false;
     const key = GEMINI_API_KEY.trim();
@@ -245,7 +251,11 @@ function validateAndSanitizeGeminiOutput(data) {
 /* ==========================================================================
    2b. LOCAL FALLBACK ANALYZER (no API key / offline mode)
    ========================================================================== */
-
+// FIX: previously, when no valid key was configured, processScannerImage()
+// just threw an error and showed a blocking alert() — the app was unusable
+// without Gemini. Now it degrades gracefully into a manual-entry flow: an
+// empty, editable "extraction" is generated locally so the same Review
+// screen is used, and the person just fills the fields in themselves.
 function localFallbackAnalyzer() {
     AppState.usingFallback = true;
     return {
@@ -467,7 +477,10 @@ function populateReviewScreen(data) {
     const dateInput = document.getElementById("reviewPrescriptionDate");
     if (dateInput) dateInput.value = data.prescriptionDate || new Date().toISOString().split('T')[0];
 
-   
+    // FIX: surface fallback/error warnings (e.g. "no API key") to the user
+    // in the UI instead of only logging them to console. If the host HTML
+    // doesn't already have a #reviewWarnings container, create one just
+    // above the medicines editor list so the banner is always visible.
     let warningsEl = document.getElementById("reviewWarnings");
     if (!warningsEl) {
         const editorListForWarnings = document.getElementById("medicinesEditorList");
